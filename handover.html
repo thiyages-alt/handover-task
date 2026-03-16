@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resignation Handover Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --surface2: #F0EDE6;
+    --border: #E2DDD5;
+    --border2: #CCC7BC;
+    --text: #1A1916;
+    --text2: #6B6660;
+    --text3: #9E9890;
+    --accent: #2D6A4F;
+    --accent-light: #D8EDE4;
+    --accent-text: #1B4332;
+    --amber: #B45309;
+    --amber-light: #FEF3C7;
+    --red: #9B1C1C;
+    --red-light: #FEE2E2;
+    --blue: #1E40AF;
+    --blue-light: #DBEAFE;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    gap: 16px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .logo-icon {
+    width: 32px; height: 32px; background: var(--accent); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-icon svg { width: 18px; height: 18px; fill: white; }
+  .logo-text { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--text); letter-spacing: -0.2px; }
+  .logo-sub { font-size: 12px; color: var(--text3); margin-top: -2px; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    padding: 7px 16px; border-radius: var(--radius-sm); cursor: pointer;
+    border: 1px solid var(--border2); background: var(--surface);
+    color: var(--text); transition: background 0.15s, border-color 0.15s;
+    text-decoration: none;
+  }
+  .btn:hover { background: var(--surface2); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: white; }
+  .btn-primary:hover { background: var(--accent-text); border-color: var(--accent-text); }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 2rem 1.5rem;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .hero-title { font-family: 'DM Serif Display', serif; font-size: 30px; color: var(--text); margin-bottom: 4px; letter-spacing: -0.5px; }
+  .hero-meta { font-size: 13px; color: var(--text3); margin-bottom: 1.25rem; }
+  .stats-row { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; margin-bottom: 1rem; }
+  .stat-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 16px;
+  }
+  .stat-label { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .stat-val { font-size: 26px; font-weight: 600; color: var(--text); }
+  .stat-val.green { color: var(--accent); }
+  .stat-val.blue { color: var(--blue); }
+  .stat-val.red { color: #C05621; }
+  .progress-wrap { display: flex; align-items: center; gap: 12px; }
+  .progress-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.5s ease; }
+  .progress-pct { font-size: 13px; font-weight: 500; color: var(--text2); min-width: 36px; text-align: right; }
+
+  /* ── Filters ── */
+  .toolbar {
+    padding: 1rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .search-wrap { position: relative; flex: 1; min-width: 180px; max-width: 260px; }
+  .search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: var(--text3); pointer-events: none; }
+  .search-wrap input { width: 100%; padding: 7px 10px 7px 32px; border: 1px solid var(--border2); border-radius: var(--radius-sm); font-size: 13px; font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--text); }
+  .search-wrap input:focus { outline: none; border-color: var(--accent); }
+  select.filter {
+    padding: 7px 12px; border: 1px solid var(--border2); border-radius: var(--radius-sm);
+    font-size: 13px; font-family: 'DM Sans', sans-serif; background: var(--surface);
+    color: var(--text); cursor: pointer;
+  }
+  select.filter:focus { outline: none; border-color: var(--accent); }
+  .filter-label { font-size: 12px; color: var(--text3); font-weight: 500; }
+  .spacer { flex: 1; }
+
+  /* ── Main ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 0 2rem 3rem; }
+
+  /* ── Week groups ── */
+  .week-section { margin-bottom: 2rem; }
+  .week-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .week-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); }
+  .week-count { font-size: 11px; background: var(--surface2); color: var(--text3); border-radius: 20px; padding: 1px 8px; }
+
+  /* ── Task card ── */
+  .task-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 6px;
+    display: grid;
+    grid-template-columns: 44px 1fr 130px 100px 90px 100px 36px;
+    align-items: center;
+    gap: 0;
+    transition: box-shadow 0.15s, border-color 0.15s;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .task-card:hover { border-color: var(--border2); box-shadow: var(--shadow); }
+  .task-card.done { opacity: 0.6; }
+  .task-card.done .task-name-text { text-decoration: line-through; color: var(--text3); }
+
+  .task-check-col {
+    display: flex; align-items: center; justify-content: center;
+    height: 100%; padding: 14px 0;
+    border-right: 1px solid var(--border);
+  }
+  .task-check {
+    width: 18px; height: 18px; border-radius: 5px;
+    border: 1.5px solid var(--border2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer; transition: all 0.15s;
+    background: var(--surface);
+  }
+  .task-check:hover { border-color: var(--accent); }
+  .task-check.checked { background: var(--accent); border-color: var(--accent); }
+  .task-check.checked::after {
+    content: ''; display: block;
+    width: 5px; height: 9px;
+    border: 2px solid white; border-top: none; border-left: none;
+    transform: rotate(45deg) translate(-1px,-2px);
+  }
+
+  .task-name-col { padding: 12px 14px; }
+  .task-name-text { font-size: 14px; font-weight: 500; color: var(--text); display: block; }
+  .task-cat-text { font-size: 11px; color: var(--text3); margin-top: 2px; display: block; }
+
+  .task-cell {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--text2);
+    border-left: 1px solid var(--border);
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .badge {
+    font-size: 11px; font-weight: 500; padding: 3px 9px;
+    border-radius: 20px; white-space: nowrap; display: inline-block;
+  }
+  .p-high { background: var(--red-light); color: var(--red); }
+  .p-medium { background: var(--amber-light); color: var(--amber); }
+  .p-low { background: var(--accent-light); color: var(--accent-text); }
+  .s-todo { background: var(--surface2); color: var(--text2); }
+  .s-inprogress { background: var(--blue-light); color: var(--blue); }
+  .s-done { background: var(--accent-light); color: var(--accent-text); }
+
+  .due-overdue { color: #C05621; font-weight: 500; }
+
+  .task-del-col {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 10px; border-left: 1px solid var(--border);
+    height: 100%;
+  }
+  .del-btn {
+    width: 24px; height: 24px; border-radius: 5px;
+    border: none; background: none; cursor: pointer;
+    color: var(--text3); font-size: 16px; display: none;
+    align-items: center; justify-content: center;
+    transition: background 0.1s, color 0.1s;
+  }
+  .task-card:hover .del-btn { display: flex; }
+  .del-btn:hover { background: var(--red-light); color: var(--red); }
+
+  .col-headers {
+    display: grid;
+    grid-template-columns: 44px 1fr 130px 100px 90px 100px 36px;
+    gap: 0; margin-bottom: 4px; padding: 0 0 4px;
+  }
+  .col-h { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; padding: 0 14px; }
+  .col-h:first-child { padding: 0; }
+
+  .empty-state {
+    text-align: center; padding: 3rem 1rem; color: var(--text3); font-size: 14px;
+  }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(26,25,22,0.45); z-index: 200;
+    align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--surface); border-radius: 14px;
+    border: 1px solid var(--border); padding: 1.75rem;
+    width: 100%; max-width: 480px;
+    box-shadow: var(--shadow-md);
+    animation: fadeUp 0.2s ease;
+  }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+  .modal-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 1.25rem; color: var(--text); }
+  .field { margin-bottom: 12px; }
+  .field label { font-size: 12px; font-weight: 600; color: var(--text2); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 9px 12px;
+    border: 1px solid var(--border2); border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    background: var(--surface); color: var(--text);
+    transition: border-color 0.15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
+  .field textarea { resize: vertical; min-height: 72px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 300;
+    background: var(--text); color: white; padding: 10px 18px;
+    border-radius: var(--radius-sm); font-size: 13px; font-weight: 500;
+    opacity: 0; transform: translateY(8px);
+    transition: all 0.25s; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .task-card { grid-template-columns: 44px 1fr 80px 36px; }
+    .task-cell.hide-mobile { display: none; }
+    .col-headers { display: none; }
+    header { padding: 0 1rem; }
+    .hero { padding: 1.25rem 1rem 1rem; }
+    .toolbar { padding: 0.75rem 1rem; }
+    main { padding: 0 1rem 2rem; }
+  }
+  @media (max-width: 480px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .hero-title { font-size: 24px; }
+    .field-row, .field-row3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+      </div>
+      <div>
+        <div class="logo-text">Handover Planner</div>
+        <div class="logo-sub">Resignation · Mar – Apr 2026</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn btn-primary" onclick="openModal()">+ Add task</button>
+    </div>
+  </div>
+</header>
+
+<!-- Hero / Stats -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-title">Resignation Handover Plan</div>
+    <div class="hero-meta" id="hero-meta">Loading...</div>
+    <div class="stats-row" id="stats-row"></div>
+    <div class="progress-wrap">
+      <span style="font-size:12px;color:var(--text3);font-weight:500;">Progress</span>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      <span class="progress-pct" id="prog-pct">0%</span>
+    </div>
+  </div>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <span class="filter-label">Filter:</span>
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="search" placeholder="Search tasks..." oninput="render()">
+  </div>
+  <select class="filter" id="fStatus" onchange="render()">
+    <option value="">All statuses</option>
+    <option value="To do">To do</option>
+    <option value="In progress">In progress</option>
+    <option value="Done">Done</option>
+  </select>
+  <select class="filter" id="fPriority" onchange="render()">
+    <option value="">All priorities</option>
+    <option value="High">High</option>
+    <option value="Medium">Medium</option>
+    <option value="Low">Low</option>
+  </select>
+  <select class="filter" id="fCat" onchange="render()">
+    <option value="">All categories</option>
+    <option value="Admin">Admin</option>
+    <option value="Documentation">Documentation</option>
+    <option value="Knowledge transfer">Knowledge transfer</option>
+    <option value="People">People</option>
+    <option value="Wrap-up">Wrap-up</option>
+  </select>
+</div>
+
+<!-- Board -->
+<main id="board"></main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-title" id="modal-title">Add task</div>
+    <div class="field"><label>Task name</label><input type="text" id="m-name" placeholder="What needs to be done?"></div>
+    <div class="field-row">
+      <div class="field"><label>Category</label>
+        <select id="m-cat">
+          <option>Admin</option><option>Documentation</option>
+          <option>Knowledge transfer</option><option>People</option><option>Wrap-up</option>
+        </select>
+      </div>
+      <div class="field"><label>Assignee</label><input type="text" id="m-assignee" placeholder="e.g. Me, Manager, IT"></div>
+    </div>
+    <div class="field-row3">
+      <div class="field"><label>Due date</label><input type="date" id="m-due" min="2026-03-16" max="2026-04-30"></div>
+      <div class="field"><label>Priority</label>
+        <select id="m-priority"><option>High</option><option>Medium</option><option>Low</option></select>
+      </div>
+      <div class="field"><label>Status</label>
+        <select id="m-status"><option>To do</option><option>In progress</option><option>Done</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Notes</label><textarea id="m-notes" placeholder="Context, blockers, links, reminders..."></textarea></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTask()">Save task</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const STORAGE_KEY = 'handover_tasks_v1';
+  const defaultTasks = [
+    { id:1,  name:"Submit formal resignation letter",         cat:"Admin",              assignee:"Me",           due:"2026-03-17", priority:"High",   status:"To do",      notes:"Confirm last working day in letter" },
+    { id:2,  name:"Confirm last working day with HR",         cat:"Admin",              assignee:"Me + HR",      due:"2026-03-18", priority:"High",   status:"To do",      notes:"Check notice period clause in contract" },
+    { id:3,  name:"Inform direct manager in person",          cat:"People",             assignee:"Me",           due:"2026-03-18", priority:"High",   status:"To do",      notes:"Before any wider announcement" },
+    { id:4,  name:"List all ongoing projects and status",     cat:"Documentation",      assignee:"Me",           due:"2026-03-21", priority:"High",   status:"To do",      notes:"Include deadlines, blockers, next steps" },
+    { id:5,  name:"Identify successor / handover recipient",  cat:"Admin",              assignee:"Manager",      due:"2026-03-21", priority:"High",   status:"To do",      notes:"Agree on who takes over each responsibility" },
+    { id:6,  name:"Document day-to-day responsibilities",     cat:"Documentation",      assignee:"Me",           due:"2026-03-25", priority:"High",   status:"To do",      notes:"Include recurring tasks and how-tos" },
+    { id:7,  name:"Create login and system access inventory", cat:"Admin",              assignee:"Me",           due:"2026-03-25", priority:"High",   status:"To do",      notes:"Flag which need IT to reassign" },
+    { id:8,  name:"Write SOPs for key workflows",             cat:"Documentation",      assignee:"Me",           due:"2026-03-28", priority:"High",   status:"To do",      notes:"Focus on tasks only you currently own" },
+    { id:9,  name:"Compile key contacts list",                cat:"Documentation",      assignee:"Me",           due:"2026-03-28", priority:"Medium", status:"To do",      notes:"Clients, vendors, internal stakeholders" },
+    { id:10, name:"Brief team on handover plan",              cat:"People",             assignee:"Me + Manager", due:"2026-03-31", priority:"High",   status:"To do",      notes:"Set expectations on transition timeline" },
+    { id:11, name:"Begin knowledge transfer sessions",        cat:"Knowledge transfer", assignee:"Me + Successor",due:"2026-04-01",priority:"High",   status:"To do",      notes:"Walk through each major responsibility" },
+    { id:12, name:"Hand over client relationships",           cat:"Knowledge transfer", assignee:"Me",           due:"2026-04-04", priority:"High",   status:"To do",      notes:"Intro emails or calls to key clients" },
+    { id:13, name:"Transfer shared files and folders",        cat:"Admin",              assignee:"Me",           due:"2026-04-07", priority:"Medium", status:"To do",      notes:"Ensure nothing lives only on personal drive" },
+    { id:14, name:"Reassign recurring meetings and ownership",cat:"Admin",              assignee:"Me + Manager", due:"2026-04-08", priority:"Medium", status:"To do",      notes:"Update calendar invites and ownership" },
+    { id:15, name:"Complete or hand off pending deliverables",cat:"Wrap-up",            assignee:"Me",           due:"2026-04-11", priority:"High",   status:"To do",      notes:"Nothing should be left mid-air" },
+    { id:16, name:"Successor shadow week",                    cat:"Knowledge transfer", assignee:"Successor",    due:"2026-04-14", priority:"High",   status:"To do",      notes:"Day-to-day observation and questions" },
+    { id:17, name:"Update internal wikis and documentation",  cat:"Documentation",      assignee:"Me",           due:"2026-04-15", priority:"Medium", status:"To do",      notes:"Confluence, Notion, shared drives etc." },
+    { id:18, name:"Return equipment checklist",               cat:"Admin",              assignee:"Me + IT",      due:"2026-04-22", priority:"Medium", status:"To do",      notes:"Laptop, access cards, peripherals" },
+    { id:19, name:"Send farewell message to team",            cat:"People",             assignee:"Me",           due:"2026-04-24", priority:"Low",    status:"To do",      notes:"Keep it warm and professional" },
+    { id:20, name:"IT offboarding and access revocation",     cat:"Admin",              assignee:"IT",           due:"2026-04-25", priority:"High",   status:"To do",      notes:"Coordinate with IT dept" },
+    { id:21, name:"Exit interview with HR",                   cat:"Wrap-up",            assignee:"Me + HR",      due:"2026-04-28", priority:"Medium", status:"To do",      notes:"Optional but good practice" },
+    { id:22, name:"Final handover sign-off",                  cat:"Wrap-up",            assignee:"Manager",      due:"2026-04-29", priority:"High",   status:"To do",      notes:"Formal confirmation that all is handed over" },
+  ];
+
+  let tasks = loadTasks();
+  let nextId = tasks.length ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
+  let editingId = null;
+
+  function loadTasks() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : defaultTasks;
+    } catch { return defaultTasks; }
+  }
+
+  function saveTasks() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); } catch {}
+  }
+
+  function weekLabel(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00');
+    const day = d.getDay();
+    const diff = day === 0 ? -6 : 1 - day;
+    const monday = new Date(d); monday.setDate(d.getDate() + diff);
+    const end = new Date(monday); end.setDate(monday.getDate() + 6);
+    const opts = { day: 'numeric', month: 'short' };
+    return `Week of ${monday.toLocaleDateString('en-GB', opts)} – ${end.toLocaleDateString('en-GB', opts)}`;
+  }
+
+  function sc(s) { return s === 'Done' ? 's-done' : s === 'In progress' ? 's-inprogress' : 's-todo'; }
+  function pc(p) { return p === 'High' ? 'p-high' : p === 'Medium' ? 'p-medium' : 'p-low'; }
+
+  function render() {
+    const q = document.getElementById('search').value.toLowerCase();
+    const fs = document.getElementById('fStatus').value;
+    const fp = document.getElementById('fPriority').value;
+    const fc = document.getElementById('fCat').value;
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+
+    const filtered = tasks.filter(t => {
+      if (q && !t.name.toLowerCase().includes(q) && !t.assignee.toLowerCase().includes(q) && !t.cat.toLowerCase().includes(q) && !t.notes.toLowerCase().includes(q)) return false;
+      if (fs && t.status !== fs) return false;
+      if (fp && t.priority !== fp) return false;
+      if (fc && t.cat !== fc) return false;
+      return true;
+    }).sort((a, b) => new Date(a.due) - new Date(b.due));
+
+    const groups = {};
+    filtered.forEach(t => {
+      const wk = t.due ? weekLabel(t.due) : 'No date';
+      if (!groups[wk]) groups[wk] = [];
+      groups[wk].push(t);
+    });
+
+    const board = document.getElementById('board');
+    if (!filtered.length) {
+      board.innerHTML = '<div class="empty-state">No tasks match your filters.</div>';
+    } else {
+      let html = `<div class="col-headers">
+        <div class="col-h"></div>
+        <div class="col-h" style="padding-left:14px">Task</div>
+        <div class="col-h">Assignee</div>
+        <div class="col-h">Due date</div>
+        <div class="col-h">Priority</div>
+        <div class="col-h">Status</div>
+        <div class="col-h"></div>
+      </div>`;
+      for (const [wk, wt] of Object.entries(groups)) {
+        html += `<div class="week-section">
+          <div class="week-header">
+            <span class="week-title">${wk}</span>
+            <span class="week-count">${wt.length} task${wt.length !== 1 ? 's' : ''}</span>
+          </div>`;
+        wt.forEach(t => {
+          const d = t.due ? new Date(t.due + 'T00:00:00') : null;
+          const isOverdue = d && d < today && t.status !== 'Done';
+          const dueStr = d ? d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '—';
+          html += `<div class="task-card${t.status === 'Done' ? ' done' : ''}" onclick="openModal(${t.id})">
+            <div class="task-check-col">
+              <div class="task-check${t.status === 'Done' ? ' checked' : ''}" onclick="toggleDone(event,${t.id})"></div>
+            </div>
+            <div class="task-name-col">
+              <span class="task-name-text">${t.name}</span>
+              <span class="task-cat-text">${t.cat}</span>
+            </div>
+            <div class="task-cell hide-mobile">${t.assignee || '—'}</div>
+            <div class="task-cell hide-mobile${isOverdue ? ' due-overdue' : ''}">${dueStr}</div>
+            <div class="task-cell hide-mobile"><span class="badge ${pc(t.priority)}">${t.priority}</span></div>
+            <div class="task-cell"><span class="badge ${sc(t.status)}">${t.status}</span></div>
+            <div class="task-del-col">
+              <button class="del-btn" onclick="deleteTask(event,${t.id})">&#x2715;</button>
+            </div>
+          </div>`;
+        });
+        html += '</div>';
+      }
+      board.innerHTML = html;
+    }
+
+    // Stats
+    const total = tasks.length;
+    const done = tasks.filter(t => t.status === 'Done').length;
+    const inprog = tasks.filter(t => t.status === 'In progress').length;
+    const highOpen = tasks.filter(t => t.priority === 'High' && t.status !== 'Done').length;
+    const pct = total ? Math.round(done / total * 100) : 0;
+
+    document.getElementById('stats-row').innerHTML = `
+      <div class="stat-card"><div class="stat-label">Total tasks</div><div class="stat-val">${total}</div></div>
+      <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-val green">${done}</div></div>
+      <div class="stat-card"><div class="stat-label">In progress</div><div class="stat-val blue">${inprog}</div></div>
+      <div class="stat-card"><div class="stat-label">High priority open</div><div class="stat-val red">${highOpen}</div></div>`;
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-pct').textContent = pct + '%';
+    document.getElementById('hero-meta').textContent = `${total - done} tasks remaining · Last working period ends 30 April 2026`;
+  }
+
+  function toggleDone(e, id) {
+    e.stopPropagation();
+    const t = tasks.find(x => x.id === id);
+    if (t) { t.status = t.status === 'Done' ? 'To do' : 'Done'; saveTasks(); render(); }
+  }
+
+  function deleteTask(e, id) {
+    e.stopPropagation();
+    if (!confirm('Delete this task?')) return;
+    tasks = tasks.filter(x => x.id !== id);
+    saveTasks(); render(); showToast('Task deleted');
+  }
+
+  function openModal(id) {
+    editingId = id || null;
+    const t = id ? tasks.find(x => x.id === id) : { name: '', cat: 'Admin', assignee: 'Me', due: '', priority: 'Medium', status: 'To do', notes: '' };
+    document.getElementById('modal-title').textContent = id ? 'Edit task' : 'Add task';
+    document.getElementById('m-name').value = t.name;
+    document.getElementById('m-cat').value = t.cat;
+    document.getElementById('m-assignee').value = t.assignee;
+    document.getElementById('m-due').value = t.due;
+    document.getElementById('m-priority').value = t.priority;
+    document.getElementById('m-status').value = t.status;
+    document.getElementById('m-notes').value = t.notes;
+    document.getElementById('modal-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('m-name').focus(), 80);
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    editingId = null;
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  function saveTask() {
+    const name = document.getElementById('m-name').value.trim();
+    if (!name) { document.getElementById('m-name').focus(); return; }
+    const data = {
+      name,
+      cat: document.getElementById('m-cat').value,
+      assignee: document.getElementById('m-assignee').value.trim(),
+      due: document.getElementById('m-due').value || '2026-04-30',
+      priority: document.getElementById('m-priority').value,
+      status: document.getElementById('m-status').value,
+      notes: document.getElementById('m-notes').value.trim(),
+    };
+    if (editingId) {
+      const t = tasks.find(x => x.id === editingId);
+      if (t) Object.assign(t, data);
+      showToast('Task updated');
+    } else {
+      tasks.push({ id: nextId++, ...data });
+      showToast('Task added');
+    }
+    saveTasks(); closeModal(); render();
+  }
+
+  function showToast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg; el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2200);
+  }
+
+  render();
+</script>
+</body>
+</html>
