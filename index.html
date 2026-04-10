@@ -28,6 +28,12 @@
   .logo-icon svg { width: 18px; height: 18px; fill: white; }
   .logo-text { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--text); }
   .logo-sub { font-size: 12px; color: var(--text3); }
+  .sync-status { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); }
+  .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text3); flex-shrink: 0; transition: background 0.3s; }
+  .sync-dot.syncing { background: var(--amber); animation: pulse 1s infinite; }
+  .sync-dot.ok { background: var(--accent); }
+  .sync-dot.err { background: var(--red); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
   .tabs-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; }
   .tabs-inner { max-width: 1100px; margin: 0 auto; display: flex; }
@@ -55,14 +61,11 @@
   .stat-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
   .stat-label { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
   .stat-val { font-size: 26px; font-weight: 600; color: var(--text); }
-  .sv-green { color: var(--accent); }
-  .sv-blue { color: var(--blue); }
-  .sv-red { color: #C05621; }
+  .sv-green { color: var(--accent); } .sv-blue { color: var(--blue); } .sv-red { color: #C05621; }
   .progress-wrap { display: flex; align-items: center; gap: 12px; }
   .progress-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
   .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
-  .pf-green { background: var(--accent); }
-  .pf-purple { background: var(--purple); }
+  .pf-green { background: var(--accent); } .pf-purple { background: var(--purple); }
   .progress-pct { font-size: 13px; font-weight: 500; color: var(--text2); min-width: 36px; text-align: right; }
 
   .toolbar { padding: 1rem 2rem; max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -79,12 +82,12 @@
   .week-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); }
   .week-count { font-size: 11px; background: var(--surface2); color: var(--text3); border-radius: 20px; padding: 1px 8px; }
 
-  .col-headers { display: grid; grid-template-columns: 44px 1fr 130px 100px 90px 100px 36px; gap: 0; margin-bottom: 4px; }
+  .col-headers { display: grid; grid-template-columns: 44px 1fr 150px 100px 90px 100px 36px; gap: 0; margin-bottom: 4px; }
   .col-h { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; padding: 0 14px; }
 
-  .task-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 6px; display: grid; grid-template-columns: 44px 1fr 130px 100px 90px 100px 36px; align-items: center; transition: box-shadow 0.15s, border-color 0.15s; cursor: pointer; overflow: hidden; }
+  .task-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 6px; display: grid; grid-template-columns: 44px 1fr 150px 100px 90px 100px 36px; align-items: center; transition: box-shadow 0.15s, border-color 0.15s; cursor: pointer; overflow: hidden; }
   .task-card:hover { border-color: var(--border2); box-shadow: var(--shadow); }
-  .task-card.done { opacity: 0.55; }
+  .task-card.done { opacity: 0.5; }
   .task-card.done .tname { text-decoration: line-through; color: var(--text3); }
 
   .chk-col { display: flex; align-items: center; justify-content: center; padding: 14px 0; border-right: 1px solid var(--border); height: 100%; }
@@ -93,10 +96,10 @@
   .chk.on-a { background: var(--purple); border-color: var(--purple); }
   .chk.on-t::after, .chk.on-a::after { content: ''; display: block; width: 5px; height: 9px; border: 2px solid white; border-top: none; border-left: none; transform: rotate(45deg) translate(-1px,-2px); }
 
-  .name-col { padding: 12px 14px; }
+  .name-col { padding: 12px 14px; min-width: 0; }
   .tname { font-size: 14px; font-weight: 500; color: var(--text); display: block; }
   .tcat { font-size: 11px; color: var(--text3); margin-top: 2px; display: block; }
-  .tcell { padding: 12px 14px; font-size: 13px; color: var(--text2); border-left: 1px solid var(--border); height: 100%; display: flex; align-items: center; }
+  .tcell { padding: 10px 14px; font-size: 13px; color: var(--text2); border-left: 1px solid var(--border); height: 100%; display: flex; align-items: center; }
 
   .badge { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 20px; white-space: nowrap; display: inline-block; }
   .p-h { background: var(--red-light); color: var(--red); }
@@ -111,6 +114,12 @@
   .del-btn { width: 24px; height: 24px; border-radius: 5px; border: none; background: none; cursor: pointer; color: var(--text3); font-size: 14px; display: none; align-items: center; justify-content: center; transition: all 0.1s; }
   .task-card:hover .del-btn { display: flex; }
   .del-btn:hover { background: var(--red-light); color: var(--red); }
+
+  .loading-overlay { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; gap: 16px; transition: opacity 0.3s; }
+  .loading-overlay.hidden { opacity: 0; pointer-events: none; }
+  .loading-spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 14px; color: var(--text3); }
   .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text3); font-size: 14px; }
 
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(26,25,22,0.45); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
@@ -141,6 +150,11 @@
 </head>
 <body>
 
+<div class="loading-overlay" id="loading">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading tasks...</div>
+</div>
+
 <header>
   <div class="header-inner">
     <div class="logo-icon">
@@ -149,6 +163,10 @@
     <div>
       <div class="logo-text">Handover Planner</div>
       <div class="logo-sub">Prepared for Mei Theng · Mar – Apr 2026</div>
+    </div>
+    <div class="sync-status">
+      <div class="sync-dot" id="sync-dot"></div>
+      <span id="sync-label">Loading...</span>
     </div>
   </div>
 </header>
@@ -212,7 +230,7 @@
       <div class="field"><label>Category</label>
         <select id="m-cat"><option>Admin</option><option>Knowledge transfer</option></select>
       </div>
-      <div class="field"><label>Assignee</label><input type="text" id="m-assignee"></div>
+      <div class="field"><label>Assignee / handover to</label><input type="text" id="m-assignee"></div>
     </div>
     <div class="frow3">
       <div class="field"><label>Due date</label><input type="date" id="m-due" min="2026-03-16" max="2026-04-30"></div>
@@ -234,48 +252,94 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  const DATA = {
-    thiyages: {
-      key: 'hw_thiyages_v1',
-      nextId: 9,
-      defaults: [
-        { id:1, name:"BitGo access transfer",                     cat:"Admin",              assignee:"Me + IT",         due:"2026-03-18", priority:"High", status:"To do", notes:"Transfer admin rights and credentials to successor" },
-        { id:2, name:"Fireblocks access transfer",                cat:"Admin",              assignee:"Me + IT",         due:"2026-03-18", priority:"High", status:"To do", notes:"Reassign Fireblocks roles and notify relevant team members" },
-        { id:3, name:"B2C2 access transfer",                      cat:"Admin",              assignee:"Me + IT",         due:"2026-03-20", priority:"High", status:"To do", notes:"Revoke personal access and reassign to successor" },
-        { id:4, name:"Crypto wallet change in ownership",         cat:"Admin",              assignee:"Me + Manager",    due:"2026-03-21", priority:"High", status:"To do", notes:"Formally transfer ownership of all crypto wallets per policy" },
-        { id:5, name:"IGS review handover",                       cat:"Knowledge transfer", assignee:"Me + Successor",  due:"2026-03-27", priority:"High", status:"To do", notes:"Walk successor through IGS review process and current state" },
-        { id:6, name:"Finance Control Approval handover",         cat:"Knowledge transfer", assignee:"Me + Manager",    due:"2026-04-01", priority:"High", status:"To do", notes:"Ensure approval authority is reassigned and successor is briefed" },
-        { id:7, name:"Investment Approval handover",              cat:"Knowledge transfer", assignee:"Me + Manager",    due:"2026-04-03", priority:"High", status:"To do", notes:"Transfer investment approval responsibilities and document sign-off process" },
-        { id:8, name:"Project AI - Treasury Management handover", cat:"Knowledge transfer", assignee:"Me + Successor",  due:"2026-04-14", priority:"High", status:"To do", notes:"Heavy and crucial — do last. Covers full project state, roadmap, and deep knowledge transfer after all access and approvals are handed over." },
-      ]
-    },
-    addy: {
-      key: 'hw_addy_v1',
-      nextId: 4,
-      defaults: [
-        { id:1, name:"Handover trades",                  cat:"Knowledge transfer", assignee:"Addy + Successor", due:"2026-03-25", priority:"High", status:"To do", notes:"Walk through all active and pending trades, processes and responsibilities" },
-        { id:2, name:"Change in admin access BVNK",      cat:"Admin",              assignee:"Addy + IT",        due:"2026-03-27", priority:"High", status:"To do", notes:"Transfer BVNK admin rights to the designated successor" },
-        { id:3, name:"Reviewing settlements analysis",   cat:"Knowledge transfer", assignee:"Addy + Successor", due:"2026-04-04", priority:"High", status:"To do", notes:"Ensure successor understands the settlements analysis process and can run it independently" },
-      ]
-    }
+  const MASTER_KEY = '$2a$10$Dva9qM3uwFyzJQSAqufuNOhNDXh4OP9BE8oWlGZIdR2FG/J/LUONq';
+  const BINS = { thiyages: '69d862a0aaba882197e19b7f', addy: '69d862ba36566621a898a16e' };
+
+  const DEFAULTS = {
+    thiyages: [
+      { id:1,  name:"BitGo access transfer",                     cat:"Admin",              assignee:"Me + IT",        due:"2026-03-18", priority:"High",   status:"To do", notes:"Transfer admin rights and credentials to successor" },
+      { id:2,  name:"Fireblocks access transfer",                cat:"Admin",              assignee:"Me + IT",        due:"2026-03-18", priority:"High",   status:"To do", notes:"Reassign Fireblocks roles and notify relevant team members" },
+      { id:3,  name:"B2C2 access transfer",                      cat:"Admin",              assignee:"Me + IT",        due:"2026-03-20", priority:"High",   status:"To do", notes:"Revoke personal access and reassign to successor" },
+      { id:4,  name:"Crypto wallet change in ownership",         cat:"Admin",              assignee:"Me + Manager",   due:"2026-03-21", priority:"High",   status:"To do", notes:"Formally transfer ownership of all crypto wallets per policy" },
+      { id:5,  name:"IGS review handover",                       cat:"Knowledge transfer", assignee:"Me + Successor", due:"2026-03-27", priority:"High",   status:"To do", notes:"Walk successor through IGS review process and current state" },
+      { id:6,  name:"Ecommbx - Authoriser",                      cat:"Admin",              assignee:"Me",             due:"2026-04-01", priority:"High",   status:"To do", notes:"" },
+      { id:7,  name:"Finance Control Approval handover",         cat:"Knowledge transfer", assignee:"Me + Manager",   due:"2026-04-01", priority:"High",   status:"To do", notes:"Ensure approval authority is reassigned and successor is briefed" },
+      { id:8,  name:"Investment Approval handover",              cat:"Knowledge transfer", assignee:"Me + Manager",   due:"2026-04-03", priority:"High",   status:"To do", notes:"Transfer investment approval responsibilities and document sign-off process" },
+      { id:9,  name:"Project AI - Treasury Management handover", cat:"Knowledge transfer", assignee:"Me + Successor", due:"2026-04-14", priority:"High",   status:"To do", notes:"Heavy and crucial — do last. Covers full project state, roadmap, and deep knowledge transfer after all access and approvals are handed over." },
+      { id:10, name:"Crypto Investment",                         cat:"Admin",              assignee:"Me",             due:"2026-04-30", priority:"High",   status:"To do", notes:"" },
+    ],
+    addy: [
+      { id:1,  name:"Crypto trades via Simpleswap",              cat:"Knowledge transfer", assignee:"Addy > Hema",         due:"2026-03-25", priority:"High",   status:"Done",  notes:"" },
+      { id:2,  name:"Metamask setup",                            cat:"Knowledge transfer", assignee:"Addy > Hema",         due:"2026-03-25", priority:"High",   status:"Done",  notes:"" },
+      { id:3,  name:"Conversion list update",                    cat:"Knowledge transfer", assignee:"Addy > Hema",         due:"2026-03-25", priority:"High",   status:"Done",  notes:"" },
+      { id:4,  name:"HTX, B2C2 and BitGo trades handover",       cat:"Knowledge transfer", assignee:"Addy > Hema",         due:"2026-03-27", priority:"High",   status:"To do", notes:"Full walkthrough of trade processes on HTX, B2C2 and BitGo" },
+      { id:5,  name:"HTX, BitGo, ChainUp access transfer",       cat:"Admin",              assignee:"Addy > Hema",         due:"2026-03-27", priority:"High",   status:"To do", notes:"Transfer admin and trading access for HTX, BitGo and ChainUp" },
+      { id:6,  name:"Change in admin access BVNK",               cat:"Admin",              assignee:"Addy + IT",           due:"2026-03-27", priority:"High",   status:"To do", notes:"Transfer BVNK admin rights to the designated successor" },
+      { id:7,  name:"IGS Reso review handover",                  cat:"Knowledge transfer", assignee:"Addy > Atiqah",       due:"2026-04-01", priority:"High",   status:"To do", notes:"Walk Atiqah through the IGS resolution review process" },
+      { id:8,  name:"FX checks review handover",                 cat:"Knowledge transfer", assignee:"Addy > Hema",         due:"2026-04-01", priority:"High",   status:"To do", notes:"Walk Hema through FX checks review process" },
+      { id:9,  name:"Bank balances analysis review",             cat:"Knowledge transfer", assignee:"Addy > Atiqah",       due:"2026-04-04", priority:"High",   status:"To do", notes:"High balances and trend analysis handover to Atiqah" },
+      { id:10, name:"Minimum and maximum balances review",       cat:"Knowledge transfer", assignee:"Addy > Atiqah",       due:"2026-04-04", priority:"High",   status:"To do", notes:"Handover to Atiqah" },
+      { id:11, name:"Reviewing settlements analysis",            cat:"Knowledge transfer", assignee:"Addy > Hema",         due:"2026-04-04", priority:"High",   status:"To do", notes:"Ensure successor understands the settlements analysis process" },
+      { id:12, name:"Crypto ratio updates handover",             cat:"Knowledge transfer", assignee:"Addy > Hema",         due:"2026-04-07", priority:"Medium", status:"To do", notes:"Walk Hema through crypto ratio update process" },
+      { id:13, name:"Onboarding new PSPs review - BackUp",       cat:"Knowledge transfer", assignee:"Addy > Harris",       due:"2026-04-07", priority:"Medium", status:"To do", notes:"Handover PSP onboarding backup review to Harris" },
+      { id:14, name:"Monthly catch up: BVNK, Orbital, BitGo",   cat:"Knowledge transfer", assignee:"Addy > Hema",         due:"2026-04-10", priority:"Medium", status:"To do", notes:"Monthly catch-up process for BVNK, Orbital and BitGo" },
+      { id:15, name:"Treasury Dashboard - ongoing project",      cat:"Knowledge transfer", assignee:"Addy > Hema + Atiqah",due:"2026-04-14", priority:"High",   status:"To do", notes:"Ongoing project — transition ownership to Hema and Atiqah" },
+      { id:16, name:"BitGo DIEL onboarding project",             cat:"Knowledge transfer", assignee:"Addy > Hema",         due:"2026-04-14", priority:"High",   status:"To do", notes:"Ongoing onboarding project — handover to Hema" },
+      { id:17, name:"Ripple DGL onboarding project",             cat:"Knowledge transfer", assignee:"Addy > Hema",         due:"2026-04-14", priority:"High",   status:"To do", notes:"Ongoing onboarding project — handover to Hema" },
+    ]
   };
 
   let activeTab = 'thiyages';
+  let cache = { thiyages: null, addy: null };
+  let nextIds = { thiyages: 11, addy: 18 };
   let editingId = null;
+  let saveTimer = null;
 
-  function getTasks(tab) {
-    const d = DATA[tab];
+  function binUrl(tab) { return `https://api.jsonbin.io/v3/b/${BINS[tab]}`; }
+  function hdrs() { return { 'Content-Type': 'application/json', 'X-Master-Key': MASTER_KEY, 'X-Bin-Versioning': 'false' }; }
+
+  function setSyncStatus(state, label) {
+    document.getElementById('sync-dot').className = 'sync-dot ' + state;
+    document.getElementById('sync-label').textContent = label;
+  }
+
+  async function fetchTasks(tab) {
     try {
-      const s = localStorage.getItem(d.key);
-      return s ? JSON.parse(s) : JSON.parse(JSON.stringify(d.defaults));
-    } catch { return JSON.parse(JSON.stringify(d.defaults)); }
+      setSyncStatus('syncing', 'Loading...');
+      const res = await fetch(binUrl(tab), { headers: hdrs() });
+      if (!res.ok) throw new Error();
+      const json = await res.json();
+      let tasks = json.record && json.record.tasks && json.record.tasks.length ? json.record.tasks : null;
+      if (!tasks) {
+        tasks = JSON.parse(JSON.stringify(DEFAULTS[tab]));
+        await pushTasks(tab, tasks, false);
+      }
+      cache[tab] = tasks;
+      nextIds[tab] = Math.max(...tasks.map(t => t.id)) + 1;
+      setSyncStatus('ok', 'Synced');
+      return tasks;
+    } catch {
+      setSyncStatus('err', 'Offline — changes may not save');
+      cache[tab] = JSON.parse(JSON.stringify(DEFAULTS[tab]));
+      return cache[tab];
+    }
   }
 
-  function setTasks(tab, tasks) {
-    try { localStorage.setItem(DATA[tab].key, JSON.stringify(tasks)); } catch {}
+  async function pushTasks(tab, tasks, showStatus = true) {
+    try {
+      if (showStatus) setSyncStatus('syncing', 'Saving...');
+      const res = await fetch(binUrl(tab), { method: 'PUT', headers: hdrs(), body: JSON.stringify({ tasks }) });
+      if (!res.ok) throw new Error();
+      cache[tab] = tasks;
+      if (showStatus) setSyncStatus('ok', 'Saved');
+    } catch {
+      if (showStatus) setSyncStatus('err', 'Save failed');
+    }
   }
 
-  function switchTab(tab) {
+  function getTasks() { return cache[activeTab] || []; }
+
+  async function switchTab(tab) {
     activeTab = tab;
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('.' + (tab === 'thiyages' ? 't-tab' : 'a-tab')).classList.add('active');
@@ -287,22 +351,29 @@
     document.getElementById('search').value = '';
     document.getElementById('fStatus').value = '';
     document.getElementById('fPriority').value = '';
+    if (!cache[tab]) {
+      showLoading(true);
+      await fetchTasks(tab);
+      showLoading(false);
+    }
     render();
   }
+
+  function showLoading(v) { document.getElementById('loading').classList.toggle('hidden', !v); }
 
   function wkLabel(ds) {
     const d = new Date(ds + 'T00:00:00');
     const diff = d.getDay() === 0 ? -6 : 1 - d.getDay();
     const mon = new Date(d); mon.setDate(d.getDate() + diff);
     const end = new Date(mon); end.setDate(mon.getDate() + 6);
-    const o = { day:'numeric', month:'short' };
+    const o = { day: 'numeric', month: 'short' };
     return 'Week of ' + mon.toLocaleDateString('en-GB', o) + ' \u2013 ' + end.toLocaleDateString('en-GB', o);
   }
   function sc(s) { return s==='Done'?'s-d':s==='In progress'?'s-i':'s-t'; }
   function pc(p) { return p==='High'?'p-h':p==='Medium'?'p-m':'p-l'; }
 
   function render() {
-    const tasks = getTasks(activeTab);
+    const tasks = getTasks();
     const q = document.getElementById('search').value.toLowerCase();
     const fs = document.getElementById('fStatus').value;
     const fp = document.getElementById('fPriority').value;
@@ -310,7 +381,7 @@
     const isA = activeTab === 'addy';
 
     const filtered = tasks.filter(t => {
-      if (q && !t.name.toLowerCase().includes(q) && !t.assignee.toLowerCase().includes(q)) return false;
+      if (q && !t.name.toLowerCase().includes(q) && !(t.assignee||'').toLowerCase().includes(q)) return false;
       if (fs && t.status !== fs) return false;
       if (fp && t.priority !== fp) return false;
       return true;
@@ -321,12 +392,12 @@
 
     let html = '';
     if (!filtered.length) {
-      html = '<div class="empty-state">No tasks match your filters.</div>';
+      html = '<div class="empty-state">No tasks found.</div>';
     } else {
       html += `<div class="col-headers">
         <div class="col-h"></div>
         <div class="col-h" style="padding-left:14px">Task</div>
-        <div class="col-h hm">Assignee</div>
+        <div class="col-h hm">Assignee / to</div>
         <div class="col-h hm">Due date</div>
         <div class="col-h hm">Priority</div>
         <div class="col-h">Status</div>
@@ -342,7 +413,7 @@
           html += `<div class="task-card${t.status==='Done'?' done':''}" onclick="openModal(${t.id})">
             <div class="chk-col"><div class="${chkCls}" onclick="toggleDone(event,${t.id})"></div></div>
             <div class="name-col"><span class="tname">${t.name}</span><span class="tcat">${t.cat}</span></div>
-            <div class="tcell hm">${t.assignee||'—'}</div>
+            <div class="tcell hm" style="font-size:12px">${t.assignee||'—'}</div>
             <div class="tcell hm${ov?' overdue':''}">${ds}</div>
             <div class="tcell hm"><span class="badge ${pc(t.priority)}">${t.priority}</span></div>
             <div class="tcell"><span class="badge ${sc(t.status)}">${t.status}</span></div>
@@ -369,25 +440,29 @@
     document.getElementById('hero-meta').textContent = `${rem} task${rem!==1?'s':''} remaining \u00b7 Handover period ends 30 April 2026`;
   }
 
+  function scheduleSave(tab, tasks) {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => pushTasks(tab, tasks), 700);
+  }
+
   function toggleDone(e, id) {
     e.stopPropagation();
-    const tasks = getTasks(activeTab);
+    const tasks = getTasks();
     const t = tasks.find(x=>x.id===id);
-    if (t) { t.status = t.status==='Done'?'To do':'Done'; setTasks(activeTab,tasks); render(); }
+    if (t) { t.status = t.status==='Done'?'To do':'Done'; cache[activeTab]=tasks; render(); scheduleSave(activeTab,tasks); }
   }
 
   function deleteTask(e, id) {
     e.stopPropagation();
     if (!confirm('Delete this task?')) return;
-    setTasks(activeTab, getTasks(activeTab).filter(x=>x.id!==id));
-    render(); showToast('Task deleted');
+    const tasks = getTasks().filter(x=>x.id!==id);
+    cache[activeTab]=tasks; render(); scheduleSave(activeTab,tasks); showToast('Task deleted');
   }
 
   function openModal(id) {
-    const tasks = getTasks(activeTab);
-    editingId = id || null;
-    const isA = activeTab === 'addy';
-    const t = id ? tasks.find(x=>x.id===id) : { name:'', cat:'Admin', assignee: isA?'Addy':'Me', due:'', priority:'High', status:'To do', notes:'' };
+    const tasks = getTasks(); editingId = id||null;
+    const isA = activeTab==='addy';
+    const t = id ? tasks.find(x=>x.id===id) : { name:'', cat:'Admin', assignee:isA?'Addy > ':'Me', due:'', priority:'High', status:'To do', notes:'' };
     document.getElementById('modal-title').textContent = id ? 'Edit task' : 'Add task';
     document.getElementById('m-name').value = t.name;
     document.getElementById('m-cat').value = t.cat;
@@ -396,37 +471,37 @@
     document.getElementById('m-priority').value = t.priority;
     document.getElementById('m-status').value = t.status;
     document.getElementById('m-notes').value = t.notes;
-    document.getElementById('save-btn').className = 'btn ' + (isA?'btn-purple':'btn-green');
+    document.getElementById('save-btn').className = 'btn '+(isA?'btn-purple':'btn-green');
     document.getElementById('modal-overlay').classList.add('open');
     setTimeout(()=>document.getElementById('m-name').focus(),80);
   }
 
   function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); editingId=null; }
-  function handleOverlayClick(e) { if (e.target===document.getElementById('modal-overlay')) closeModal(); }
+  function handleOverlayClick(e) { if(e.target===document.getElementById('modal-overlay')) closeModal(); }
   document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
   function saveTask() {
     const name = document.getElementById('m-name').value.trim();
     if (!name) { document.getElementById('m-name').focus(); return; }
     const data = { name, cat:document.getElementById('m-cat').value, assignee:document.getElementById('m-assignee').value.trim(), due:document.getElementById('m-due').value||'2026-04-30', priority:document.getElementById('m-priority').value, status:document.getElementById('m-status').value, notes:document.getElementById('m-notes').value.trim() };
-    const tasks = getTasks(activeTab);
-    if (editingId) {
-      Object.assign(tasks.find(x=>x.id===editingId)||{}, data);
-      showToast('Task updated');
-    } else {
-      tasks.push({ id: DATA[activeTab].nextId++, ...data });
-      showToast('Task added');
-    }
-    setTasks(activeTab, tasks); closeModal(); render();
+    const tasks = getTasks();
+    if (editingId) { Object.assign(tasks.find(x=>x.id===editingId)||{}, data); showToast('Task updated'); }
+    else { tasks.push({ id:nextIds[activeTab]++, ...data }); showToast('Task added'); }
+    cache[activeTab]=tasks; closeModal(); render(); scheduleSave(activeTab,tasks);
   }
 
   function showToast(msg) {
     const el = document.getElementById('toast');
-    el.textContent = msg; el.classList.add('show');
-    setTimeout(()=>el.classList.remove('show'), 2200);
+    el.textContent=msg; el.classList.add('show');
+    setTimeout(()=>el.classList.remove('show'),2200);
   }
 
-  render();
+  (async () => {
+    showLoading(true);
+    await Promise.all([fetchTasks('thiyages'), fetchTasks('addy')]);
+    showLoading(false);
+    render();
+  })();
 </script>
 </body>
 </html>
